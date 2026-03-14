@@ -31,7 +31,7 @@ puts "Creating houses..."
   end_date = Faker::Date.between(from: start_date, to: 1.year.from_now)
 
   House.create!(
-    address: Faker::Address.full_address,
+    address: Faker::Address.street_address,
     start_date: start_date,
     end_date: end_date,
     owner: Faker::Name.name,
@@ -50,7 +50,7 @@ House.find_each do |house|
     Item.create!(
       house: house,
       name: Faker::Commerce.product_name,
-      price: Faker::Commerce.price(range: 1..500),
+      price: format("%.2f", rand(10.00..100.00)).to_s,
       tags: Faker::Lorem.words(number: rand(1..4)),
       description: Faker::Lorem.paragraph(sentence_count: 3),
       condition: conditions.sample,

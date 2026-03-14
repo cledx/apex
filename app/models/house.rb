@@ -1,6 +1,8 @@
 class House < ApplicationRecord
   US_ADDRESS_FORMAT = /\A(\d+\s+[\w\s.,'-]+|P\.?\s*O\.?\s*Box\s+\d+[\w\s.,'-]*)\z/i
 
+  has_many :items, dependent: :destroy
+
   validates :address,
             presence: true,
             format: {
