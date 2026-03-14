@@ -1,2 +1,28 @@
 class House < ApplicationRecord
+  US_ADDRESS_FORMAT = /\A(\d+\s+[\w\s.,'-]+|P\.?\s*O\.?\s*Box\s+\d+[\w\s.,'-]*)\z/i
+
+  validates :address,
+            presence: true,
+            format: {
+              with: US_ADDRESS_FORMAT,
+              message: "must be a valid US address (e.g. 123 Main St or P.O. Box 456)"
+            }
+
+  validates :start_date, :end_date, presence: true
+  validate :end_date_after_start_date
+
+  validates :owner, presence: true
+
+  validates :name,
+            length: { maximum: 255 },
+            allow_blank: true
+
+  private
+
+  def end_date_after_start_date
+    return if start_date.blank? || end_date.blank?
+    return if end_date >= start_date
+
+    errors.add(:end_date, "must be on or after the start date")
+  end
 end
