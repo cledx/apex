@@ -1,0 +1,20 @@
+<div class="mx-4 my-2">
+<h1>Houses</h1>
+
+<% @houses.each do |house| %>
+  <div class="my-2">
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2><%= house.name %></h2>
+        <p><%= house.address %></p>
+        <p><%= house.description %></p>
+      </div>
+      <h2 class="card-trip-pricing"><%= house.start_date.strftime("%m/%d") %> - <%= house.end_date.strftime("%m/%d") %></h2> 
+      <%= link_to "", house_path(house), class: "stretched-link" %>
+    </div>
+  </div>
+  </div>
+<% end %>
+</div>
