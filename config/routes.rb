@@ -17,9 +17,10 @@ get "about", to: "pages#about"
 
 resources :houses, only: [:index, :show]
 resources :items, only: [:index, :show]
+resources :consultations, only: [:new, :create]
 
 namespace :manager do
   resources :houses
   resources :items, only: [:new, :create, :edit, :update, :destroy] # or nested under houses
-end
+  resources :consultations
 end
