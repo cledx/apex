@@ -1,3 +1,5 @@
+TAGS = %w[Furniture Antiques Collectibles Electronics Kitchenware Jewelry Artwork Books Tools Appliances Clothing Garden Toys Sports_Equipment Linens Vintage Glassware Music Rugs Cameras]
+
 # Clear existing data (optional - comment out if you want to preserve data)
 puts "Clearing existing data..."
 WantToBuy.destroy_all
@@ -28,7 +30,7 @@ puts "Created #{User.count} users."
 puts "Creating houses..."
 2.times do
   start_date = Faker::Date.between(from: 1.year.ago, to: Date.current)
-  end_date = Faker::Date.between(from: start_date, to: 1.year.from_now)
+  end_date = start_date + 1.day
 
   House.create!(
     address: Faker::Address.street_address,
@@ -37,7 +39,21 @@ puts "Creating houses..."
     owner: Faker::Name.name,
     name: Faker::Lorem.words(number: 2).join(" ").titleize,
     description: Faker::Lorem.paragraphs(number: 2).join("\n\n"),
-    tags: Faker::Lorem.words(number: rand(2..5))
+    tags: TAGS.sample(rand(3..6))
+  )
+end
+2.times do
+  start_date = Faker::Date.between(from: Date.current + rand(1..30), to: Date.current + rand(30..60))
+  end_date = start_date + 1.day
+
+  House.create!(
+    address: Faker::Address.street_address,
+    start_date: start_date,
+    end_date: end_date,
+    owner: Faker::Name.name,
+    name: Faker::Lorem.words(number: 2).join(" ").titleize,
+    description: Faker::Lorem.paragraphs(number: 2).join("\n\n"),
+    tags: TAGS.sample(rand(3..6))
   )
 end
 puts "Created #{House.count} houses."
@@ -51,7 +67,7 @@ House.find_each do |house|
       house: house,
       name: Faker::Commerce.product_name,
       price: format("%.2f", rand(10.00..100.00)).to_s,
-      tags: Faker::Lorem.words(number: rand(1..4)),
+      tags: TAGS.sample,
       description: Faker::Lorem.paragraph(sentence_count: 3),
       condition: conditions.sample,
       age: ["brand new", "less than 1 year", "1-2 years", "2-5 years", "5+ years"].sample,

@@ -5,3 +5,4 @@ class Item < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 5 }
   validates :price, format: { with: /\A\d+(\.\d{1,2})?\z/ }
+end

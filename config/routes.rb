@@ -13,14 +13,16 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root to: "pages#home"
-get "about", to: "pages#about"
+  get "about", to: "pages#about"
+  get "old-sales", to: "houses#old_sales"
 
-resources :houses, only: [:index, :show]
-resources :items, only: [:index, :show]
-resources :consultations, only: [:new, :create]
+  resources :houses, only: [:index, :show]
+  resources :items, only: [:index, :show]
+  resources :consultations, only: [:new, :create]
 
-namespace :manager do
-  resources :houses
-  resources :items, only: [:new, :create, :edit, :update, :destroy] # or nested under houses
-  resources :consultations
+  namespace :manager do
+    resources :houses
+    resources :items, only: [:new, :create, :edit, :update, :destroy] # or nested under houses
+    resources :consultations
+  end
 end

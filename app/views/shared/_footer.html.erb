@@ -1,0 +1,27 @@
+<div class="row m-5">
+        <div class="col-md-8 col-lg-6 mx-auto">
+          <div class="home-contact__card d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 p-3 p-md-4 bg-white shadow-sm">
+            <p class="home-contact__title mb-0">
+              Connect with us on<br />
+              Facebook, Email, or Phone:
+            </p>
+            <div class="home-contact__icons d-flex gap-3">
+              <%= link_to "https://facebook.com/YourPage",
+                          target: "_blank",
+                          rel: "noopener",
+                          class: "home-contact__icon-link btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" do %>
+                <i class="fa-brands fa-facebook-f home-contact__icon" aria-hidden="true"></i>
+              <% end %>
+              <%= mail_to "info@yourdomain.com",
+                          nil,
+                          class: "home-contact__icon-link btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" do %>
+                <i class="fa-solid fa-envelope home-contact__icon" aria-hidden="true"></i>
+              <% end %>
+              <%= link_to "tel:+1234567890",
+                          class: "home-contact__icon-link btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" do %>
+                <i class="fa-solid fa-phone home-contact__icon" aria-hidden="true"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+</div>
