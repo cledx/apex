@@ -1,2 +1,103 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<main class="home-hero">
+  <section class="home-hero__top my-0 py-5">
+    <div class="home-hero__image-wrapper d-flex align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="home-hero__overlay-card text-center p-4 p-md-5 shadow-lg">
+              <h1 class="home-hero__headline mb-4">
+                Your next Hidden Treasure is waiting<br />
+                at an Apex Estate Sale!
+              </h1>
+
+              <p class="home-hero__subcopy mb-3">
+                Hoping for a Lucky Find?<br />
+                Interested in Antiques and Rare Items?<br />
+                You’ll find it, at an Apex Estate Sale!
+              </p>
+
+              <p class="home-hero__body mb-4">
+                Browse our upcoming sales, updated regularly
+              </p>
+
+              <%= link_to "Browse Upcoming Sales",
+                          houses_path,
+                          class: "btn btn-primary btn-lg px-4 home-hero__cta" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-services py-5">
+    <div class="container">
+      <div class="row g-4 align-items-stretch"">
+        <div class="col-lg-5 align-self-center">
+          <div class="home-services__card p-4 shadow-sm d-flex flex-column justify-content-center"
+               style="background: rgba(255,255,255,0.75); backdrop-filter: blur(6px); border-radius: 1rem;">
+            <p class="home-services__lead h5 mb-3 text-center">
+              Looking to Host an Estate Sale?<br />
+              Book a Consultation today!
+            </p>
+
+            <%= link_to "Book a Consultation",
+                        "#",
+                        class: "btn btn-outline-primary home-services__cta" %>
+          </div>
+        </div>
+
+        <div class="col-lg-2 d-none d-lg-flex justify-content-center">
+          <div class="home-services__connector my-auto"></div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="bg-white bg-opacity-75 rounded-4 shadow-sm p-4 mb-3" style="backdrop-filter: blur(3px);">
+              <p class="mb-0">
+                <strong>We handle all aspects of the sale, start to finish.</strong> <br />
+                <strong>That includes, but is not limited to:</strong>
+              </p>
+            </div>
+            <div class="bg-white bg-opacity-75 rounded-4 shadow-sm p-4" style="backdrop-filter: blur(3px);">
+              <ul class="home-services__list list-unstyled mb-0">
+                <li class="small">&bull; Appraisal &amp; Pricing</li>
+                <li class="small">&bull; Staging &amp; Advertising</li>
+                <li class="small">&bull; Sales Management</li>
+                <li class="small">&bull; Consignment After the Sale</li>
+                <li class="small">&bull; Cleanup &amp; Removal</li>
+                <li class="small">&bull; <span class="home-services__emphasis">and we specialize in Firearms Collections!</span></li>
+              </ul>
+            </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-8 col-lg-6 mx-auto">
+          <div class="home-contact__card d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 p-3 p-md-4 bg-white shadow-sm">
+            <p class="home-contact__title mb-0">
+              Connect with us on<br />
+              Facebook, Email, or Phone:
+            </p>
+            <div class="home-contact__icons d-flex gap-3">
+              <%= link_to "https://facebook.com/YourPage",
+                          target: "_blank",
+                          rel: "noopener",
+                          class: "home-contact__icon-link btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" do %>
+                <i class="fa-brands fa-facebook-f home-contact__icon" aria-hidden="true"></i>
+              <% end %>
+              <%= mail_to "info@yourdomain.com",
+                          nil,
+                          class: "home-contact__icon-link btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" do %>
+                <i class="fa-solid fa-envelope home-contact__icon" aria-hidden="true"></i>
+              <% end %>
+              <%= link_to "tel:+1234567890",
+                          class: "home-contact__icon-link btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-0" do %>
+                <i class="fa-solid fa-phone home-contact__icon" aria-hidden="true"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
