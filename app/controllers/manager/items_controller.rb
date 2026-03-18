@@ -32,11 +32,15 @@ module Manager
 
     def destroy
       house = @item.house
-      @item.destroy
-      redirect_to house_path(house), notice: "Item was successfully destroyed."
+      if @item.soft_delete
+        redirect_to house_path(house), notice: "Item was successfully deleted."
+      else
+        redirect_to item_path(@item), alert: "Failed to delete item."
+      end
     end
 
     private
+    
 
     def set_item
       @item = Item.find(params[:id])

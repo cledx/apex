@@ -10,7 +10,11 @@ module Manager
     end
 
     def new
-      @house = House.new
+      if user_signed_in? && current_user.manager?
+        @house = House.new
+      else
+        redirect_to houses_path, alert: "You are not authorized to access this page."
+      end
     end
 
     def create
@@ -34,8 +38,11 @@ module Manager
     end
 
     def destroy
-      @house.destroy
-      redirect_to manager_houses_path, notice: "House was successfully destroyed."
+      if @house.soft_delete
+        redirect_to manager_houses_path, notice: "House was successfully deleted."
+      else
+        redirect_to manager_house_path(@house), alert: "Failed to delete house."
+      end
     end
 
     private

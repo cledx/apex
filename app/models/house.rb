@@ -20,6 +20,14 @@ class House < ApplicationRecord
             length: { maximum: 255 },
             allow_blank: true
 
+  def soft_delete
+    if update(deleted_at: Time.current)
+      true
+    else
+      false
+    end
+  end
+
   private
 
   def end_date_after_start_date
