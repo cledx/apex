@@ -1,0 +1,110 @@
+<div class="container py-4 py-lg-5">
+  <% if local_assigns[:manager_view] %>
+    <section class="d-flex gap-2 mb-3">
+      <%= link_to "Edit", edit_manager_item_path(@item), class: "btn btn-sm rounded-pill px-3", style: "background:#71d8ff;" %>
+      <%= link_to "Delete",
+                  manager_item_path(@item),
+                  data: { turbo_method: :delete, turbo_confirm: "Delete this item?" },
+                  class: "btn btn-sm rounded-pill px-3", style: "background:#ff5f5f;" %>
+    </section>
+  <% end %>
+
+  <section class="bg-light bg-opacity-75 rounded-4 p-3 p-lg-4">
+    <div class="row g-3">
+      <div class="col-12 col-lg-7">
+        <header class="d-flex justify-content-between align-items-center gap-2 bg-body-tertiary rounded-pill px-3 py-2 mb-3">
+          <h1 class="h2 mb-0"><%= @item.name.presence || "Item Name" %></h1>
+          <p class="h3 mb-0 fw-normal text-nowrap">
+            <%= @item.price.present? ? number_to_currency(@item.price) : "$---" %>
+          </p>
+        </header>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <% if @item.tags.any? %>
+            <% @item.tags.each do |tag| %>
+              <span class="badge rounded-pill text-bg-primary px-3 py-2 fw-normal"><%= tag %></span>
+            <% end %>
+          <% else %>
+            <% 6.times do %>
+              <span class="badge rounded-pill text-bg-primary px-3 py-2 fw-normal">Item Tag</span>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="d-flex justify-content-between gap-2 mb-3">
+          <div class="bg-body-tertiary rounded-pill px-3 py-2 text-center">
+            <span class="small text-secondary me-1">Age</span>
+            <span><%= @item.age.presence || "-" %></span>
+          </div>
+          <div class="bg-body-tertiary rounded-pill px-3 py-2 text-center">
+            <span class="small text-secondary me-1">Condition</span>
+            <span><%= @item.condition.presence || "-" %></span>
+          </div>
+        </div>
+
+        <article class="bg-body-tertiary rounded-4 p-4" style="min-height:300px;">
+          <p class="fs-4 mb-0">
+            <%= @item.description.presence || "Item Description" %>
+          </p>
+        </article>
+      </div>
+
+      <div class="col-12 col-lg-5">
+        <div class="bg-body-tertiary p-3 h-100">
+          <div class="position-relative ratio ratio-1x1 border border-secondary-subtle">
+            <% if @item.photos.attached? %>
+              <%= image_tag @item.photos.first, alt: "#{@item.name.presence || 'Item'} featured photo", class: "w-100 h-100 object-fit-cover" %>
+            <% else %>
+              <div class="w-100 h-100 bg-secondary-subtle"></div>
+            <% end %>
+
+            <!-- <% if local_assigns[:manager_view] %>
+              <div class="position-absolute top-0 start-0 end-0 d-flex justify-content-between p-2">
+                <%= link_to manager_item_path(@item),
+                            data: { turbo_method: :delete, turbo_confirm: "Delete this item?" },
+                            class: "text-dark text-decoration-none fs-4",
+                            aria: { label: "Delete item" } do %>
+                  <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+                <% end %>
+                <%= link_to edit_manager_item_path(@item),
+                            class: "text-dark text-decoration-none fs-4",
+                            aria: { label: "Edit item" } do %>
+                  <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                <% end %>
+              </div>
+            <% else %> -->
+              <button type="button" class="btn p-0 border-0 bg-transparent text-dark position-absolute top-0 end-0 m-2 fs-4" aria-label="Save item" data-item-favourite-target="favouriteButton" data-action="click->item-favourite#toggleFavourite"
+              data-item-favourite-item-id="<%= @item.id %>" data-item-favourite-user-id="<%= current_user.id %>"
+              data-item-favourite-is-favourite="<%= @item.is_favourite?(current_user) %>">
+                <i class="fa-regular fa-star" aria-hidden="true"></i>
+              </button>
+            <!-- <% end %> -->
+          </div>
+
+          <div class="row g-2 mt-2">
+            <% if @item.photos.attached? %>
+              <% @item.photos.first(4).each do |photo| %>
+                <div class="col-3">
+                  <div class="ratio ratio-1x1 border border-secondary-subtle">
+                    <%= image_tag photo, alt: "#{@item.name.presence || 'Item'} photo thumbnail", class: "w-100 h-100 object-fit-cover" %>
+                  </div>
+                </div>
+              <% end %>
+              <% (4 - @item.photos.first(4).length).times do %>
+                <div class="col-3">
+                  <div class="ratio ratio-1x1 border border-secondary-subtle bg-secondary-subtle"></div>
+                </div>
+              <% end %>
+            <% else %>
+              <% 4.times do %>
+                <div class="col-3">
+                  <div class="ratio ratio-1x1 border border-secondary-subtle bg-secondary-subtle"></div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

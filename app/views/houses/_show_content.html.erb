@@ -108,7 +108,9 @@
               <% end %>
             </div>
           <% else %>
-            <button type="button" class="house-item-card__favorite" aria-label="Save item">
+            <button type="button" class="house-item-card__favorite" aria-label="Save item" data-item-favourite-target="favouriteButton" data-action="click->item-favourite#toggleFavourite"
+            data-item-favourite-item-id="<%= item.id %>" data-item-favourite-user-id="<%= current_user.id %>"
+            data-item-favourite-is-favourite="<%= item.is_favourite?(current_user) %>">
               <i class="fa-regular fa-star" aria-hidden="true"></i>
             </button>
           <% end %>
