@@ -2,10 +2,6 @@ module Manager
   class HousesController < BaseController
     before_action :set_house, only: [:show, :edit, :update, :destroy]
 
-    def index
-      @houses = House.all
-    end
-
     def show
     end
 
@@ -52,7 +48,7 @@ module Manager
     end
 
     def house_params
-      params.require(:house).permit(:address, :name, :owner, :description, :start_date, :end_date, :tags, images: [])
+      params.require(:house).permit(:address, :name, :owner, :description, :start_date, :end_date, :tags, photos: [])
     end
   end
 end
