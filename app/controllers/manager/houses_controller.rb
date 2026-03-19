@@ -25,10 +25,15 @@ module Manager
     end
 
     def edit
+      @house = House.find(params[:id])
     end
 
     def update
-      if @house.update(house_params)
+      remove_photo_ids = house_params[:remove_photo_ids]
+      attributes = house_params.except(:remove_photo_ids)
+
+      if @house.update(attributes)
+        purge_removed_photos(remove_photo_ids)
         redirect_to manager_house_path(@house), notice: "House was successfully updated."
       else
         render :edit, status: :unprocessable_entity
@@ -50,7 +55,13 @@ module Manager
     end
 
     def house_params
-      params.require(:house).permit(:address, :name, :owner, :description, :start_date, :end_date, :tags, photos: [])
+      params.require(:house).permit(:address, :name, :owner, :description, :start_date, :end_date, :tags, photos: [], remove_photo_ids: [])
+    end
+
+    def purge_removed_photos(remove_photo_ids)
+      return if remove_photo_ids.blank?
+
+      @house.photos.attachments.where(id: remove_photo_ids.reject(&:blank?)).find_each(&:purge_later)
     end
   end
 end
