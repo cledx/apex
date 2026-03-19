@@ -1,0 +1,139 @@
+<div class="house-show container py-4 py-lg-5" data-controller="house-search">
+  <section class="house-show__hero mb-4">
+    <div class="house-show__hero-content">
+      <div class="house-show__headline">
+        <div class="house-show__title-row">
+          <h1 class="house-show__title"><%= @house.name.presence || "House Sale" %></h1>
+          <% if local_assigns[:manager_view] %>
+            <%= link_to "Edit", edit_manager_house_path(@house), class: "house-show__inline-edit-btn" %>
+          <% end %>
+        </div>
+        <p class="house-show__date-range mb-3">
+          <%= @house.start_date.strftime("%m/%d/%Y") %> - <%= @house.end_date.strftime("%m/%d/%Y") %>
+          <span class="text-muted">(Sale Date)</span>
+        </p>
+        <p class="house-show__address mb-2"><%= @house.address %></p>
+        <p class="house-show__description mb-3"><%= @house.description %></p>
+
+        <div class="house-show__tag-row">
+          <% @house.tags.each do |tag| %>
+            <span class="house-pill"><%= tag %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="house-show__media">
+        <% if @house.photos.attached? %>
+          <div class="house-show__featured-photo">
+            <%= image_tag @house.photos.first, alt: "#{@house.name.presence || 'House'} featured photo", class: "w-100 h-100 object-fit-cover" %>
+          </div>
+          <div class="house-show__photo-strip">
+            <% @house.photos.first(3).each do |photo| %>
+              <div class="house-show__photo-thumb">
+                <%= image_tag photo, alt: "#{@house.name.presence || 'House'} photo thumbnail", class: "w-100 h-100 object-fit-cover" %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="house-show__featured-photo house-show__placeholder d-flex align-items-center justify-content-center">
+            <span class="small text-muted">Main Photo</span>
+          </div>
+          <div class="house-show__photo-strip">
+            <% 3.times do %>
+              <div class="house-show__photo-thumb house-show__placeholder d-flex align-items-center justify-content-center">
+                <span class="small text-muted">Photo</span>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <section class="house-show__toolbar mb-4">
+    <div class="house-show__search-wrap">
+      <i class="fa-solid fa-magnifying-glass house-show__search-icon" aria-hidden="true"></i>
+      <input
+        type="search"
+        class="house-show__search-input"
+        placeholder="Search"
+        aria-label="Search items on this sale page"
+        data-house-search-target="input"
+        data-action="input->house-search#filter"
+      >
+    </div>
+    <% if local_assigns[:manager_view] %>
+      <%= link_to "Add Item", new_manager_item_path(house_id: @house.id), class: "house-show__add-item-btn" %>
+    <% end %>
+    <div>
+      <select
+        class="house-show__category-select"
+        aria-label="Filter by category"
+        data-house-search-target="categorySelect"
+        data-action="change->house-search#filter"
+      >
+        <option value="">Categories</option>
+        <% @categories.each do |category| %>
+          <option value="<%= category.to_s.downcase %>"><%= category %></option>
+        <% end %>
+      </select>
+    </div>
+  </section>
+
+  <section class="house-show__grid" data-house-search-target="grid">
+    <% @items.each do |item| %>
+      <article
+        class="house-item-card"
+        data-house-search-target="item"
+        data-house-search-category-value="<%= item.category.to_s.downcase %>"
+      >
+        <div class="house-item-card__media-wrap">
+          <%= link_to item_path(item), class: "house-item-card__media-link" do %>
+            <% if item.photos.attached? %>
+              <%= image_tag item.photos.first, alt: "#{item.name} photo", class: "house-item-card__media object-fit-cover" %>
+            <% else %>
+              <div class="house-item-card__media house-show__placeholder"></div>
+            <% end %>
+          <% end %>
+          <% if local_assigns[:manager_view] %>
+            <div class="house-item-card__manager-actions">
+              <%= link_to manager_item_path(item),
+                          data: { turbo_method: :delete, turbo_confirm: "Delete this item?" },
+                          class: "house-item-card__icon-btn",
+                          aria: { label: "Delete item" } do %>
+                <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+              <% end %>
+              <%= link_to edit_manager_item_path(item), class: "house-item-card__icon-btn", aria: { label: "Edit item" } do %>
+                <i class="fa-solid fa-pen" aria-hidden="true"></i>
+              <% end %>
+            </div>
+          <% else %>
+            <button type="button" class="house-item-card__favorite" aria-label="Save item">
+              <i class="fa-regular fa-star" aria-hidden="true"></i>
+            </button>
+          <% end %>
+        </div>
+        <div class="house-item-card__body">
+          <div class="d-flex justify-content-between gap-2 align-items-start mb-2">
+            <h2 class="house-item-card__title mb-0"><%= item.name.presence || "Item Name" %></h2>
+            <div class="house-item-card__price">
+              <%= item.price.present? ? number_to_currency(item.price) : "" %>
+            </div>
+          </div>
+          <div class="house-show__tag-row">
+            <% item.tags.first(4).each do |tag| %>
+              <span class="house-pill"><%= tag %></span>
+            <% end %>
+          </div>
+        </div>
+      </article>
+    <% end %>
+  </section>
+  <div class="house-show__empty d-none" data-house-search-target="noResults">
+    No matching items found.
+  </div>
+
+  <% if @items.empty? %>
+    <div class="house-show__empty">No items listed yet for this sale.</div>
+  <% end %>
+</div>

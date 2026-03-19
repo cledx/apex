@@ -3,6 +3,8 @@ module Manager
     before_action :set_house, only: [:show, :edit, :update, :destroy]
 
     def show
+      @items = @house.items.where(deleted_at: nil)
+      @categories = @items.pluck(:category).compact_blank.uniq.sort
     end
 
     def new

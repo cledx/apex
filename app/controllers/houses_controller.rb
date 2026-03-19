@@ -11,5 +11,7 @@ class HousesController < ApplicationController
 
   def show
     @house = House.find(params[:id])
+    @items = @house.items.where(deleted_at: nil)
+    @categories = @items.pluck(:category).compact_blank.uniq.sort
   end
 end

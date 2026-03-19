@@ -1,0 +1,6 @@
+<% content_for :title, "Houses - Show" %>
+<% if current_user.role == "manager" || current_user.role == "admin" %>
+    <%= render "show_content", manager_view: true %>
+<% else %>
+    <%= render "show_content", manager_view: false %>
+<% end %>
