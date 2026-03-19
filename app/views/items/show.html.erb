@@ -1,4 +1,4 @@
-<% content_for :title, "#{@house.name}" %>
+<% content_for :title, "#{@item.name}" %>
 <% if current_user.role == "manager" || current_user.role == "admin" %>
     <%= render "show_content", manager_view: true %>
 <% else %>

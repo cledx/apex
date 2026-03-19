@@ -14,4 +14,29 @@ class Item < ApplicationRecord
     end
   end
 
+  def is_favourite?(user)
+    WantToBuy.exists?(item: self, user: user)
+  end
+
+  def add_to_favourite(user)
+    if is_favourite?(user)
+      return false
+    else
+      WantToBuy.create(item: self, user: user)
+      return true
+    end
+  end
+
+  def remove_from_favourite(user)
+    if is_favourite?(user)
+      if WantToBuy.find_by(item: self, user: user).destroy
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
+
 end
