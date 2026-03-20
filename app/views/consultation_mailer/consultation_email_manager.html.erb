@@ -1,0 +1,20 @@
+<p>A new consultation request was submitted.</p>
+
+<p><%= link_to "View open consultations", manager_consultations_url %></p>
+
+<dl style="margin: 0; padding: 0;">
+  <dt style="font-weight: bold; margin-top: 0.75rem;">Name</dt>
+  <dd style="margin: 0 0 0.5rem 0;"><%= @consultation.client_name.presence || "—" %></dd>
+
+  <dt style="font-weight: bold;">Email</dt>
+  <dd style="margin: 0 0 0.5rem 0;"><%= @consultation.email.presence || "—" %></dd>
+
+  <dt style="font-weight: bold;">Phone</dt>
+  <dd style="margin: 0 0 0.5rem 0;"><%= @consultation.phone_number.presence || "—" %></dd>
+
+  <dt style="font-weight: bold;">Property address</dt>
+  <dd style="margin: 0 0 0.5rem 0;"><%= @consultation.address %></dd>
+
+  <dt style="font-weight: bold;">Details</dt>
+  <dd style="margin: 0; white-space: pre-wrap;"><%= @consultation.details %></dd>
+</dl>

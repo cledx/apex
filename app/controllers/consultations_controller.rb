@@ -8,7 +8,8 @@ class ConsultationsController < ApplicationController
   def create
     @consultation = Consultation.new(consultation_params)
     if @consultation.save
-      
+      ConsultationMailer.consultation_email_client(@consultation).deliver_now if @consultation.email.present?
+      ConsultationMailer.consultation_email_manager(@consultation).deliver_now
       redirect_to root_path, notice: "Thanks — we'll be in touch about your consultation."
     else
       render :new, status: :unprocessable_entity

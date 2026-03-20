@@ -1,7 +1,6 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
@@ -32,8 +31,12 @@ Rails.application.configure do
   # Store uploaded files locally in development.
   config.active_storage.service = :cloudinary
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Surface SMTP errors while developing real delivery; ignored when using :file below.
+  config.action_mailer.raise_delivery_errors = true
+
+  # Write messages to tmp/mail (open the .html files in a browser). Switch to :smtp when testing SMTP.
+  config.action_mailer.delivery_method = :file
+  config.action_mailer.file_settings = { location: Rails.root.join("tmp/mail") }
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false

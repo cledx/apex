@@ -1,0 +1,11 @@
+A new consultation request was submitted.
+
+Open consultations: <%= manager_consultations_url %>
+
+Name: <%= @consultation.client_name.presence || "—" %>
+Email: <%= @consultation.email.presence || "—" %>
+Phone: <%= @consultation.phone_number.presence || "—" %>
+Property address: <%= @consultation.address %>
+
+Details:
+<%= @consultation.details %>
