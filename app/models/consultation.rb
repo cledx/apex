@@ -1,12 +1,6 @@
 class Consultation < ApplicationRecord
-  US_ADDRESS_FORMAT = House::US_ADDRESS_FORMAT
 
-  validates :address,
-            presence: true,
-            format: {
-              with: US_ADDRESS_FORMAT,
-              message: "must be a valid US address (e.g. 123 Main St or P.O. Box 456)"
-            }
+  validates :address, presence: true
 
   validates :phone_number, presence: true
   validate :phone_number_must_have_10_digits
@@ -14,6 +8,14 @@ class Consultation < ApplicationRecord
   validates :details,
             presence: true,
             length: { minimum: 60 }
+
+  def soft_delete
+    if update(deleted_at: Time.current)
+      true
+    else
+      false
+    end
+  end
 
   private
 
