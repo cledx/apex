@@ -1,6 +1,7 @@
 class Consultation < ApplicationRecord
   scope :open, -> { where(deleted_at: nil, closed_at: nil) }
   scope :visible, -> { where(deleted_at: nil) }
+  scope :awaiting_contact, -> { open.where(contacted_at: nil) }
 
   validates :client_name, :email, presence: true, on: :create
 

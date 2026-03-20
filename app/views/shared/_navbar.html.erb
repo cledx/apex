@@ -30,7 +30,13 @@
         <% if user_signed_in? %>
           <% if current_user.role != "customer" %>
             <li class="nav-item active mx-3">
-              <%= link_to "Consultations", manager_consultations_path, class: "nav-link" %>
+              <%= link_to manager_consultations_path, class: "nav-link d-inline-flex align-items-center gap-1" do %>
+                Consultations
+                <% if consultation_nav_needs_attention? %>
+                  <i class="fas fa-exclamation-circle text-danger" title="Open consultations not yet contacted" aria-hidden="true"></i>
+                  <span class="visually-hidden">(open consultations need contact)</span>
+                <% end %>
+              <% end %>
             </li>
           <% end %>
           <li class="nav-item dropdown d-flex align-items-center">
