@@ -22,7 +22,11 @@ module Manager
     end
 
     def update
-      if @item.update(item_params)
+      remove_photo_ids = item_params[:remove_photo_ids]
+      attributes = item_params.except(:remove_photo_ids)
+
+      if @item.update(attributes)
+        purge_removed_photos(remove_photo_ids)
         redirect_to item_path(@item), notice: "Item was successfully updated."
       else
         @house = @item.house
@@ -47,7 +51,13 @@ module Manager
     end
 
     def item_params
-      params.require(:item).permit(:house_id, :name, :price, :description, :age, :category, :condition, :tags, images: [])
+      params.require(:item).permit(:house_id, :name, :price, :description, :age, :category, :condition, :tags, photos: [], remove_photo_ids: [])
+    end
+
+    def purge_removed_photos(remove_photo_ids)
+      return if remove_photo_ids.blank?
+
+      @item.photos.attachments.where(id: remove_photo_ids.reject(&:blank?)).find_each(&:purge_later)
     end
   end
 end

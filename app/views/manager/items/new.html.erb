@@ -1,0 +1,86 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="h3 <%= @house ? "mb-1" : "mb-4" %>">Create Item</h1>
+          <% if @house %>
+            <p class="text-muted small mb-4">House: <strong><%= @house.name.presence || @house.address %></strong></p>
+          <% end %>
+
+          <%= simple_form_for [:manager, @item], html: { class: "simple_form", data: { turbo: false } } do |f| %>
+            <%= f.error_notification %>
+
+            <%= f.input :house_id, as: :hidden %>
+
+            <div class="mb-3">
+              <%= f.input :name,
+                          required: true,
+                          input_html: { maxlength: 255, class: "form-control" },
+                          label_html: { class: "form-label" } %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= f.input :price,
+                            required: false,
+                            hint: "Optional. e.g. 99.99",
+                            input_html: { class: "form-control", inputmode: "decimal" },
+                            label_html: { class: "form-label" } %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <%= f.input :category,
+                            input_html: { class: "form-control" },
+                            label_html: { class: "form-label" } %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= f.input :condition,
+                            input_html: { class: "form-control" },
+                            label_html: { class: "form-label" } %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <%= f.input :age,
+                            input_html: { class: "form-control" },
+                            label_html: { class: "form-label" } %>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <%= f.input :description,
+                          as: :text,
+                          input_html: { rows: 4, class: "form-control" },
+                          label_html: { class: "form-label" } %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.input :tags,
+                          input_html: { class: "form-control", placeholder: "comma-separated or single tag" },
+                          label_html: { class: "form-label" } %>
+            </div>
+
+            <div class="mb-4">
+              <%= f.input :photos,
+                          as: :file,
+                          input_html: { multiple: true, accept: "image/*", class: "form-control" },
+                          label: "Item Photos",
+                          label_html: { class: "form-label" },
+                          hint: "You can select multiple photos." %>
+            </div>
+
+            <div class="d-flex gap-2">
+              <%= f.button :submit, "Create Item", class: "btn btn-primary" %>
+              <% if @house %>
+                <%= link_to "Cancel", manager_house_path(@house), class: "btn btn-outline-secondary" %>
+              <% else %>
+                <%= link_to "Cancel", manager_houses_path, class: "btn btn-outline-secondary" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

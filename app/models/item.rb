@@ -4,7 +4,7 @@ class Item < ApplicationRecord
   has_many_attached :photos
 
   validates :name, presence: true, length: { minimum: 5 }
-  validates :price, format: { with: /\A\d+(\.\d{1,2})?\z/ }
+  validates :price, format: { with: /\A\d+(\.\d{1,2})?\z/, allow_blank: true }
 
   def soft_delete
     if update(deleted_at: Time.current)
