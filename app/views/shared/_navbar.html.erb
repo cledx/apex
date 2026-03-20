@@ -30,7 +30,7 @@
         <% if user_signed_in? %>
           <% if current_user.role != "customer" %>
             <li class="nav-item active mx-3">
-              <%= link_to "Consultations", "#", class: "nav-link" %>
+              <%= link_to "Consultations", manager_consultations_path, class: "nav-link" %>
             </li>
           <% end %>
           <li class="nav-item dropdown d-flex align-items-center">

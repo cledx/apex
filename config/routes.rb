@@ -23,7 +23,11 @@ Rails.application.routes.draw do
   namespace :manager do
     resources :houses
     resources :items, only: [:new, :create, :edit, :update, :destroy] # or nested under houses
-    resources :consultations, only: [:index, :show, :destroy]
+    resources :consultations, only: [:index, :destroy, :update] do
+      member do
+        patch :close
+      end
+    end
     get "closed-consultations", to: "consultations#closed"
   end
 end

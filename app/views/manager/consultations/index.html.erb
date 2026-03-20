@@ -1,0 +1,54 @@
+<% content_for :title, "Consultation - Index" %>
+
+<div class="container py-4 pb-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="h3 mb-0">
+        <span class="badge rounded-pill text-bg-light text-dark px-3 py-2">Open Consultations</span>
+      </h1>
+    </div>
+  </div>
+
+  <% if @consultations.blank? %>
+    <p class="text-white">No open consultations right now.</p>
+  <% else %>
+    <% @consultations.each do |consultation| %>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <div class="row g-4 align-items-stretch">
+            <div class="col-lg-3">
+              <p class="fw-bold mb-1"><%= consultation.client_name.presence || "—" %></p>
+              <p class="text-muted small mb-2"><%= consultation.address %></p>
+              <p class="small mb-1"><span class="fw-semibold text-body-secondary">Phone:</span> <%= consultation.phone_number %></p>
+              <p class="small mb-0"><span class="fw-semibold text-body-secondary">Email:</span> <%= consultation.email.presence || "—" %></p>
+            </div>
+
+            <%= form_with model: [:manager, consultation], method: :patch, html: { class: "col-lg-6 d-flex flex-column gap-3" } do |f| %>
+              <div>
+                <%= f.label :details, "Details", class: "form-label fw-semibold small text-uppercase text-secondary" %>
+                <%= f.text_area :details, rows: 6, class: "form-control" %>
+              </div>
+              <div class="form-check">
+                <%= hidden_field_tag "consultation[contacted]", "0", id: "consultation_contacted_hidden_#{consultation.id}" %>
+                <%= check_box_tag "consultation[contacted]", "1", consultation.contacted_at.present?, class: "form-check-input", id: "consultation_contacted_#{consultation.id}" %>
+                <%= label_tag "consultation_contacted_#{consultation.id}", "Contacted", class: "form-check-label" %>
+              </div>
+              <%= f.submit "Save", class: "btn btn-secondary align-self-start" %>
+            <% end %>
+
+            <div class="col-lg-3 d-flex flex-column gap-2 align-items-stretch">
+              <div class="d-flex justify-content-end">
+                <%= button_to manager_consultation_path(consultation), method: :delete, class: "btn btn-link text-danger text-decoration-none p-1", form: { data: { turbo_confirm: "Remove this consultation from the open list?" } }, aria: { label: "Delete consultation" } do %>
+                  <i class="fas fa-trash-alt fa-lg" aria-hidden="true"></i>
+                <% end %>
+              </div>
+              <div class="mt-auto">
+                <%= button_to "Close", close_manager_consultation_path(consultation), method: :patch, class: "btn btn-danger w-100" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
