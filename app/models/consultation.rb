@@ -3,13 +3,16 @@ class Consultation < ApplicationRecord
   scope :visible, -> { where(deleted_at: nil) }
   scope :awaiting_contact, -> { open.where(contacted_at: nil) }
 
-  validates :client_name, :email, presence: true, on: :create
+  validates :client_name, presence: true, on: :create
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :create
+  validates :email,
+            format: { with: URI::MailTo::EMAIL_REGEXP },
+            allow_blank: true,
+            on: :create
 
   validates :address, presence: true
 
-  validates :phone_number, presence: true
+  validate :email_or_phone_present
   validate :phone_number_must_have_10_digits
 
   validates :details,
@@ -26,6 +29,12 @@ class Consultation < ApplicationRecord
   end
 
   private
+
+  def email_or_phone_present
+    return if email.present? || phone_number.present?
+
+    errors.add(:base, "Please provide an email address or phone number.")
+  end
 
   def phone_number_must_have_10_digits
     return if phone_number.blank?
