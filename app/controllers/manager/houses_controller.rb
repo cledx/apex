@@ -20,8 +20,12 @@ module Manager
       if url.blank?
         redirect_to new_manager_house_path, alert: "Please enter a URL."
       else
-        redirect_to new_manager_house_path(url: url), notice: "URL submitted."
+        house = ::HouseImportFromUrl.new(url).call
+        redirect_to manager_house_path(house),
+                    notice: "Imported sale with #{house.items.count} listing photos."
       end
+    rescue StandardError => e
+      redirect_to new_manager_house_path(url: url), alert: "Import failed: #{e.message}"
     end
 
     def create

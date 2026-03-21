@@ -48,7 +48,11 @@
             </div>
           </div>
 
-          <p class="mb-1"><%= house.address %></p>
+          <% if house.start_date < Date.current + 2.days %>
+            <p class="mb-1"><%= house.address %></p>
+          <% else %>
+            <p class="mb-1">[This sale's address will be revealed soon.]</p>
+          <% end %>
           <p class="mb-2 small text-muted"><%= house.description %></p>
 
           <div class="d-flex flex-wrap gap-2 mt-2">
