@@ -3,8 +3,9 @@
 <div class="container py-4 pb-5">
   <div class="row mb-4">
     <div class="col">
-      <h1 class="h3 mb-0">
+      <h1 class="h3 mb-0 d-flex align-items-center gap-3 flex-wrap">
         <span class="badge rounded-pill text-bg-light text-dark px-3 py-2">Open Consultations</span>
+        <%= link_to "Closed Consultations", manager_closed_consultations_path, class: "btn btn-sm btn-outline-light rounded-pill px-3 py-1 small text-decoration-none" %>
       </h1>
     </div>
   </div>
