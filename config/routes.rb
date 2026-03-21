@@ -21,7 +21,11 @@ Rails.application.routes.draw do
   resources :consultations, only: [:new, :create]
 
   namespace :manager do
-    resources :houses
+    resources :houses do
+      collection do
+        post :new_from_url
+      end
+    end
     resources :items, only: [:new, :create, :edit, :update, :destroy] # or nested under houses
     resources :consultations, only: [:index, :destroy, :update] do
       member do

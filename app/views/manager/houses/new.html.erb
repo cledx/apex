@@ -5,6 +5,14 @@
         <div class="card-body p-4">
           <h1 class="h3 mb-4">Create House</h1>
 
+          <%= form_with url: new_from_url_manager_houses_path, method: :post, local: true, html: { class: "mb-4", data: { turbo: false } } do %>
+            <div class="mb-3">
+              <label class="form-label" for="house_import_url">Import from URL</label>
+              <%= text_field_tag :url, params[:url], id: "house_import_url", class: "form-control", placeholder: "https://…", type: "url" %>
+            </div>
+            <%= submit_tag "Submit URL", class: "btn btn-outline-primary" %>
+          <% end %>
+
           <%= simple_form_for [:manager, @house], html: { class: "simple_form", data: { turbo: false } } do |f| %>
             <%= f.error_notification %>
 

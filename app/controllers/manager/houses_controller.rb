@@ -15,6 +15,15 @@ module Manager
       end
     end
 
+    def new_from_url
+      url = params[:url].to_s.strip
+      if url.blank?
+        redirect_to new_manager_house_path, alert: "Please enter a URL."
+      else
+        redirect_to new_manager_house_path(url: url), notice: "URL submitted."
+      end
+    end
+
     def create
       @house = House.new(house_params)
       if @house.save
