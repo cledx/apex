@@ -21,7 +21,8 @@ users_data.each do |attrs|
     email: attrs[:email],
     password: password,
     password_confirmation: password,
-    role: attrs[:role]
+    role: attrs[:role],
+    confirmed_at: Time.current
   )
 end
 puts "Created #{User.count} users."
