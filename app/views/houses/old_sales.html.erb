@@ -6,46 +6,6 @@
     </span>
   </div>
 
-  <% @houses.each do |house| %>
-    <div class="card mb-3 shadow-sm">
-      <div class="row g-0">
-        <div class="col-md-8 p-3">
-          <div class="d-flex justify-content-between">
-            <div>
-              <h2 class="h5 mb-1"><%= house.name %></h2>
-              <p class="mb-1 small text-muted">
-                <%= house.start_date.strftime("%m/%d/%Y") %> - <%= house.end_date.strftime("%m/%d/%Y") %>
-              </p>
-            </div>
-            <div class="text-end">
-              <% if user_signed_in? && (current_user.role == "manager" || current_user.role == "admin") %>
-                <%= link_to "Edit", edit_manager_house_path(house), class: "btn btn-sm btn-outline-primary mb-2" %><br>
-              <% end %>
-              <%= link_to house_path(house), class: "btn btn-sm btn-outline-secondary" do %>
-                See More
-              <% end %>
-            </div>
-          </div>
-
-          <p class="mb-1"><%= house.address %></p>
-          <p class="mb-2 small text-muted"><%= house.description %></p>
-
-          <div class="d-flex flex-wrap gap-2 mt-2">
-            <% house.tags.each do |tag| %>
-              <span class="badge rounded-pill bg-primary"><%= tag %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="h-100 d-flex align-items-center justify-content-center bg-light border-start">
-            <div class="text-muted text-center">
-              <i class="fa-regular fa-image fa-2x mb-2" aria-hidden="true"></i>
-              <div class="small">Sale Photo</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render "houses", houses: @houses %>
+  
 </div>

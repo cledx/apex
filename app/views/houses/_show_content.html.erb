@@ -12,10 +12,14 @@
           <%= @house.start_date.strftime("%m/%d/%Y") %> - <%= @house.end_date.strftime("%m/%d/%Y") %>
           <span class="text-muted">(Sale Date)</span>
         </p>  
-        <% if @house.start_date < Date.current + 2.days %>
+        <% if @house.address_publicly_visible? %>
           <p class="house-show__address mb-2"><%= @house.address %></p>
         <% else %>
-          <p class="house-show__address mb-2">This sale's address will be revealed soon.</p>
+          <% if @house.past_sale? %>
+            <p class="house-show__address mb-2">[This sale is over and its address is not available.]</p>
+          <% else %>
+            <p class="house-show__address mb-2">[This sale's address will be revealed soon.]</p>
+          <% end %>
         <% end %>
         <p class="house-show__description mb-3"><%= @house.description %></p>
 

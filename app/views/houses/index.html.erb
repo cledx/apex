@@ -21,62 +21,7 @@
         <%= link_to "Old Sales", old_sales_path, class: "btn btn-primary btn-lg" %>
       </div>
     </div>
-  <% end %>
-
-  <% @houses.each do |house| %>
-    <div class="card mb-3 shadow-sm">
-      <div class="row g-0">
-        <div class="col-md-8 p-3">
-          <div class="d-flex justify-content-between">
-            <div>
-              <h2 class="h5 mb-1"><%= house.name %></h2>
-              <p class="mb-1 small text-muted">
-                <%= house.start_date.strftime("%m/%d/%Y") %> - <%= house.end_date.strftime("%m/%d/%Y") %>
-              </p>
-            </div>
-            <div class="text-end">
-              <% if user_signed_in? && current_user.manager? %>
-                <%= link_to "Edit", edit_manager_house_path(house), class: "btn btn-sm btn-outline-primary mb-2" %><br>
-                <%= link_to "Delete",
-                            manager_house_path(house),
-                            data: { turbo_method: :delete, turbo_confirm: "Delete this house sale?" },
-                            class: "btn btn-sm btn-outline-danger mb-2" %><br>
-              <% end %>
-              <%= link_to house_path(house), class: "btn btn-sm btn-outline-secondary" do %>
-                See More
-              <% end %>
-            </div>
-          </div>
-
-          <% if house.start_date < Date.current + 2.days %>
-            <p class="mb-1"><%= house.address %></p>
-          <% else %>
-            <p class="mb-1">[This sale's address will be revealed soon.]</p>
-          <% end %>
-          <p class="mb-2 small text-muted"><%= house.description %></p>
-
-          <div class="d-flex flex-wrap gap-2 mt-2">
-            <% house.tags.each do |tag| %>
-              <span class="badge rounded-pill bg-primary"><%= tag %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="d-flex align-items-center justify-content-center bg-light border-start" style="height: 220px;">
-            <% if house.photos.attached? %>
-              <%= image_tag house.photos.first,
-                            class: "w-100 h-100 object-fit-cover",
-                            alt: "#{house.name.presence || 'House'} photo" %>
-            <% else %>
-              <div class="text-muted text-center">
-                <i class="fa-regular fa-image fa-2x mb-2" aria-hidden="true"></i>
-                <div class="small">Sale Photo</div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
+  <% else %>
+    <%= render "houses", houses: @houses %>
   <% end %>
 </div>
