@@ -58,6 +58,13 @@
                           label_html: { class: "form-label" } %>
             </div>
 
+            <div class="mb-3">
+              <%= f.input :total_sales,
+                          as: :integer,
+                          input_html: { min: 0, class: "form-control" },
+                          label_html: { class: "form-label" } %>
+            </div>
+
             <% if @house.photos.attached? %>
               <div class="mb-3">
                 <label class="form-label d-block">Current House Photos</label>

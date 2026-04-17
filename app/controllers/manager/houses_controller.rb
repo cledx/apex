@@ -68,7 +68,7 @@ module Manager
     end
 
     def house_params
-      params.require(:house).permit(:address, :name, :owner, :description, :start_date, :end_date, :tags, photos: [], remove_photo_ids: [])
+      params.require(:house).permit(:address, :name, :owner, :description, :start_date, :end_date, :tags, :total_sales, photos: [], remove_photo_ids: [])
     end
 
     def purge_removed_photos(remove_photo_ids)
