@@ -31,11 +31,11 @@ class House < ApplicationRecord
   # Public listing: show the real address once the sale start is on or before
   # (today + 2 calendar days), or once the sale has already started (start_date in the past).
   def address_publicly_visible?
-    start_date <= Time.zone.today + 2.days && start_date > Time.zone.today - 2.days
+    start_date <= Time.zone.today + 2.days && !past_sale?
   end
 
   def past_sale?
-    start_date < Time.zone.today - 2.days
+    end_date < Time.zone.today
   end
 
   private

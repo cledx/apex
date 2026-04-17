@@ -4,7 +4,10 @@
     <div class="col-md-8 p-3">
       <div class="d-flex justify-content-between">
         <div>
-          <h2 class="h5 mb-1"><%= house.name %></h2>
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <h2 class="h5 mb-0"><%= house.name %></h2>
+            <span class="small text-success ps-5">Total Sales: ~$<%= house.total_sales %></span>
+          </div>
           <p class="mb-1 small text-muted">
             <%= house.start_date.strftime("%m/%d/%Y") %> - <%= house.end_date.strftime("%m/%d/%Y") %>
           </p>

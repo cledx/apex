@@ -40,7 +40,8 @@ puts "Creating houses..."
     owner: Faker::Name.name,
     name: Faker::Lorem.words(number: 2).join(" ").titleize,
     description: Faker::Lorem.paragraphs(number: 2).join("\n\n"),
-    tags: TAGS.sample(rand(3..6))
+    tags: TAGS.sample(rand(3..6)),
+    total_sales: rand(5000..10000)
   )
 end
 2.times do
